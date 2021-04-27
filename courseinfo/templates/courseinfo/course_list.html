@@ -1,0 +1,39 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Course List
+{% endblock %}
+
+{% block create_button %}
+    {% if perms.courseinfo.add_course %}
+    <a
+        href="{% url 'courseinfo_course_create_urlpattern'  %}"
+        class="button button-primary">
+      Create New Course</a>
+    {% endif %}
+{% endblock %}
+
+{% block org_content %}
+  <h2>Course List</h2>
+    {% if perms.courseinfo.add_course %}
+    <div class="mobile">
+      <a
+          href="{% url 'courseinfo_course_create_urlpattern' %}"
+          class="button button-primary">
+        Create New Course</a>
+    </div>
+    {% endif %}
+  <ul>
+    {% for course in course_list %}
+        <div class="list-group">
+            <a href="{{ course.get_absolute_url }}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                 <h5 class="mb-1"> {{ course }}</h5>
+            </div>
+            </a>
+        </div>
+    {% empty %}
+      <li><em>There are currently no courses available.</em></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
